@@ -1,4 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { useState } from 'react'
 import useMemoRef from './index'
 
 describe('useMemoRef', () => {
@@ -7,9 +8,9 @@ describe('useMemoRef', () => {
     });
 
     it('try use', () => {
-        const [state, setState] = useState(0)
         const { rerender } = renderHook(() => {
-            const [memoState, memoStateRef]=useMemoRef(() => state, state)
+            const [state, setState] = useState(0)
+            const [memoState, memoStateRef] = useMemoRef(() => state, [state])
         });
     });
 
