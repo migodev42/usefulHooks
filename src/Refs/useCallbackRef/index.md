@@ -4,10 +4,12 @@
 
 ### 使用场景
 
-当使用 `useCallback` 时，依赖了一系列 `deps` , 并需要在 `useEffect` 中用到 `useCallback` 的最新版本，且不想让 `useCallback` 的更新触发 `useEffect`
+当使用 `useCallback` 时，依赖了一系列 `deps` , 并需要在 `useEffect` 中用到 `useCallback` 的函数的最新版本，且不想让 `useCallback` 的函数的更新触发 `useEffect`
+
 目标：
 
 * 只在 `params` 改变时候触发 `useEffect`
+
 实际情况：
 
 * `deps` 的改变也会触发 `useEffect`
@@ -23,7 +25,7 @@ useEffect(() => {
 ```
 
 解决:
-
+* 此时`deps` 的改变不会触发 `useEffect`
 ``` js
 const [func, funcRef] = useCallbackRef((params) => {
     console.log(deps)

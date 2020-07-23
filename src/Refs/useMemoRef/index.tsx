@@ -11,4 +11,4 @@ const useMemoRef = (effect: any, deps: Array<any>) => {
     return [memo, memoRef]
 }
 
-export default useStateRef
+export default useMemoRef
