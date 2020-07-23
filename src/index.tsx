@@ -1,5 +1,5 @@
 /* SideEffect */
-export { default as useCallbackRef } from './SideEffect/useCallbackRef'
+export { default as useCallbackRef } from './Refs/useCallbackRef'
 
 /* State */
 export { default as useFirstMountState } from './State/useFirstMountState'

@@ -8,3 +8,8 @@ Collection of useful React hooks I have created or used.
     - `useRenderCount` 返回渲染次数
 - `SideEffect`
     - `useCallbackRef` 返回useCallback的结果和指向这个结果的最新ref
+
+
+
+## Testing
+- [`@testing-library`](https://testing-library.com/docs/dom-testing-library/install)
