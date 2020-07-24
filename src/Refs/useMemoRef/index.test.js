@@ -6,7 +6,7 @@ import useMemoRef from './index'
 import React, { useCallback, useEffect, useState } from 'react';
 
 let mockDeps = { max: 10 };
-const mockEffect = jest.fn();
+const mockFn = jest.fn(p => p);
 
 const TestApp = ({ count }) => {
     const [memo, memoRef] = useMemoRef(() => count, [count])
@@ -22,7 +22,9 @@ const useTestHook = () => {
 
     const [memo, memoRef] = useMemoRef(() => count, [count])
     useEffect(() => {
-        mockEffect(memoRef.current)
+        console.log(memoRef.current)
+        const p={...memoRef}
+        mockFn(p.current)
     }, [call])
 
     return {
@@ -82,21 +84,34 @@ describe('useMemoRef', () => {
 
     it('memoRef`s change won`t cause useEffect', () => {
         const { rerender, result } = renderHook(() => useTestHook())
-        expect(mockEffect).toHaveBeenCalledTimes(1);
+        expect(mockFn).toHaveBeenCalledTimes(1);
 
         hookAct(() => {
             result.current.setCount(1)
-        })        
-        expect(mockEffect).toHaveBeenCalledTimes(1);
+        })
+        expect(mockFn).toHaveBeenCalledTimes(1);
+        
+        hookAct(() => {
+            result.current.setCall(new Date())
+        })
+        expect(mockFn).toHaveBeenCalledTimes(2);
+        expect(mockFn).toHaveReturnedWith(1);
+
 
         hookAct(() => {
             result.current.setCount(2)
         })
-        expect(mockEffect).toHaveBeenCalledTimes(1);
+        expect(mockFn).toHaveBeenCalledTimes(2);
 
         hookAct(() => {
             result.current.setCall(new Date())
         })
-        expect(mockEffect).toHaveBeenCalledTimes(2);
+        expect(mockFn).toHaveBeenCalledTimes(3);
+        expect(mockFn).toHaveReturnedWith(2);
+
+        hookAct(() => {
+            result.current.setCall(new Date())
+        })
+        expect(mockFn).toHaveBeenCalledTimes(4);
     })
 })
